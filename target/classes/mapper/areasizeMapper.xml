@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bedrock.origin.mapper.areasizeMapper">
+  <resultMap id="BaseResultMap" type="com.bedrock.origin.beans.areasize">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="areaName" jdbcType="VARCHAR" property="areaname" />
+    <result column="longitudeMin" jdbcType="DOUBLE" property="longitudemin" />
+    <result column="longitudeMax" jdbcType="DOUBLE" property="longitudemax" />
+    <result column="latitudeMin" jdbcType="DOUBLE" property="latitudemin" />
+    <result column="latitudeMax" jdbcType="DOUBLE" property="latitudemax" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, areaName, longitudeMin, longitudeMax, latitudeMin, latitudeMax
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from areasize
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from areasize
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bedrock.origin.beans.areasize">
+    insert into areasize (id, areaName, longitudeMin, 
+      longitudeMax, latitudeMin, latitudeMax
+      )
+    values (#{id,jdbcType=INTEGER}, #{areaname,jdbcType=VARCHAR}, #{longitudemin,jdbcType=DOUBLE}, 
+      #{longitudemax,jdbcType=DOUBLE}, #{latitudemin,jdbcType=DOUBLE}, #{latitudemax,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bedrock.origin.beans.areasize">
+    insert into areasize
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="areaname != null">
+        areaName,
+      </if>
+      <if test="longitudemin != null">
+        longitudeMin,
+      </if>
+      <if test="longitudemax != null">
+        longitudeMax,
+      </if>
+      <if test="latitudemin != null">
+        latitudeMin,
+      </if>
+      <if test="latitudemax != null">
+        latitudeMax,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="areaname != null">
+        #{areaname,jdbcType=VARCHAR},
+      </if>
+      <if test="longitudemin != null">
+        #{longitudemin,jdbcType=DOUBLE},
+      </if>
+      <if test="longitudemax != null">
+        #{longitudemax,jdbcType=DOUBLE},
+      </if>
+      <if test="latitudemin != null">
+        #{latitudemin,jdbcType=DOUBLE},
+      </if>
+      <if test="latitudemax != null">
+        #{latitudemax,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bedrock.origin.beans.areasize">
+    update areasize
+    <set>
+      <if test="areaname != null">
+        areaName = #{areaname,jdbcType=VARCHAR},
+      </if>
+      <if test="longitudemin != null">
+        longitudeMin = #{longitudemin,jdbcType=DOUBLE},
+      </if>
+      <if test="longitudemax != null">
+        longitudeMax = #{longitudemax,jdbcType=DOUBLE},
+      </if>
+      <if test="latitudemin != null">
+        latitudeMin = #{latitudemin,jdbcType=DOUBLE},
+      </if>
+      <if test="latitudemax != null">
+        latitudeMax = #{latitudemax,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bedrock.origin.beans.areasize">
+    update areasize
+    set areaName = #{areaname,jdbcType=VARCHAR},
+      longitudeMin = #{longitudemin,jdbcType=DOUBLE},
+      longitudeMax = #{longitudemax,jdbcType=DOUBLE},
+      latitudeMin = #{latitudemin,jdbcType=DOUBLE},
+      latitudeMax = #{latitudemax,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

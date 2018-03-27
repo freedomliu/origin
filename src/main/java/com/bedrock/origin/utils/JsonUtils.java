@@ -6,18 +6,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * 
- * @Title: JsonUtils.java
- * @Package com.lee.utils
- * @Description: 自定义响应结构, 转换类
- * Copyright: Copyright (c) 2016
- * Company:Nathan.Lee.Salvatore
- * 
- * @author leechenxiang
- * @date 2016年4月29日 下午11:05:03
- * @version V1.0
- */
 public class JsonUtils {
 
     // 定义jackson对象
