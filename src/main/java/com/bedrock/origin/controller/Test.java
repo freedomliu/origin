@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.bedrock.origin.beans.areasize;
 import com.bedrock.origin.mapper.areasizeMapper;
 
 @Controller
@@ -16,6 +17,7 @@ public class Test {
 	@GetMapping("freemark.html")
 	public String test1(ModelMap map)
 	{
+		areasize a= mapper.selectByPrimaryKey(4);
 		System.out.println(mapper.deleteByPrimaryKey(5));
 		return "NewFile";
 	}	

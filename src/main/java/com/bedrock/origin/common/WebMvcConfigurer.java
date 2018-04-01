@@ -2,7 +2,7 @@ package com.bedrock.origin.common;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import com.bedrock.origin.controller.interceptor.OneInterceptor;
 import com.bedrock.origin.controller.interceptor.TwoInterceptor;
@@ -10,7 +10,7 @@ import com.bedrock.origin.controller.interceptor.TwoInterceptor;
 
 
 @Configuration
-public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
+public class WebMvcConfigurer extends WebMvcConfigurationSupport  {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -19,7 +19,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 		 */
 		registry.addInterceptor(new TwoInterceptor()).addPathPatterns("/two/**")
 													 .addPathPatterns("/one/**");
-		registry.addInterceptor(new OneInterceptor()).addPathPatterns("/one/**");
+		registry.addInterceptor(new OneInterceptor()).addPathPatterns("/**");
 		
 		super.addInterceptors(registry);
 	}

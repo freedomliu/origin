@@ -23,7 +23,7 @@ public class OneInterceptor implements HandlerInterceptor  {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, 
 			Object object) throws Exception {
 		
-		System.out.println("被one拦截，放行...");
+		System.out.println("拦截器，放行...");
 		return true;
 		
 		/*if (true) {
