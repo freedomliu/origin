@@ -1,4 +1,4 @@
-package com.bedrock.origin.exception;
+package com.bedrock.origin.common;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
