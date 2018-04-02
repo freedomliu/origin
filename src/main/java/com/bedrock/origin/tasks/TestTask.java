@@ -8,6 +8,7 @@ public class TestTask {
 
 	// 定义每过3秒执行任务
 	// @Scheduled(fixedRate = 3000)
+	// @Scheduled(cron = "0 28 11 ? * *")
 	// 网站有惊喜: http://cron.qqe2.com/
     public void reportCurrentTime() {
         System.out.println("现在时间：" + new Date());
