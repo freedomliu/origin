@@ -1,4 +1,4 @@
-/*package com.bedrock.origin.common;
+package com.bedrock.origin.common;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -11,25 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-*//**
- * 
- * @Title: LogServiceTakeTime.java
- * @Package com.itzixi.web.component
- * @Description: service的方法执行需要多少时间统计
- * Copyright: Copyright (c) 2016
- * Company:FURUIBOKE.SCIENCE.AND.TECHNOLOGY
- * 
- * @author leechenxiang
- * @date 2017年4月10日 下午3:21:25
- * @version V1.0
- *//*
+
 @Aspect
 @Component
 public class LogServiceTakeTime {
 	
 	final static Logger log = LoggerFactory.getLogger(LogServiceTakeTime.class);
 
-	@Pointcut("execution(* com.imooc.service..*.*(..))")
+	@Pointcut("execution(* com.bedrock.origin.controller..*.*(..))")
 	public void performance(){
 	}
 
@@ -39,7 +28,7 @@ public class LogServiceTakeTime {
 		//记录起始时间 
 		long begin = System.currentTimeMillis();
 		Object result = "";
-		*//** 执行目标方法 *//*
+		/** 执行目标方法 */
 		try{
 			result= joinPoint.proceed();
 		}
@@ -47,7 +36,7 @@ public class LogServiceTakeTime {
 			log.error("日志记录发生错误, errorMessage: {}", e.getMessage());
 		}
 		finally{
-			*//** 记录操作时间 *//*
+			/** 记录操作时间 */
 			long took = (System.currentTimeMillis() - begin)/1000;
 			if (took >= 10) {
 				log.error("Service 执行时间为: {}秒", took);
@@ -66,10 +55,10 @@ public class LogServiceTakeTime {
 		log.info("doBefore");
     }
 	
-//    @AfterReturning(returning = "ret", pointcut = "performance()")
-//    public void doAfterReturning(Object ret) throws Throwable {
-//        // 处理完请求，返回内容
-//    	log.info("doAfterReturning");
-//    }
+    @AfterReturning(returning = "ret", pointcut = "performance()")
+    public void doAfterReturning(Object ret) throws Throwable {
+        // 处理完请求，返回内容
+    	log.info("doAfterReturning");
+    }
 	
-}*/
+}

@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -17,6 +18,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 //开启异步调用方法
 @EnableAsync
+//开启切面
+@EnableAspectJAutoProxy
 public class OriginApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
@@ -26,7 +29,7 @@ public class OriginApplication extends SpringBootServletInitializer{
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder)
 	{
-		//独立Tomcat部署时运行入口
+		//独立Tomcat部署时运行入口  
 		return builder.sources(OriginApplication.class);
 	}
 }

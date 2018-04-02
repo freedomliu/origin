@@ -29,7 +29,8 @@ public class OriginExceptionHandler {
     		HttpServletResponse response, Exception e) throws Exception {
     	e.printStackTrace();
     	if (isAjax(reqest)) {
-    		return "redict:ajaxError.do";
+    		//return "redict:ajaxError.do";
+    		return "forward:ajaxError.do";
     	} else {
     		ModelAndView mav = new ModelAndView();
             mav.addObject("exception", e);
