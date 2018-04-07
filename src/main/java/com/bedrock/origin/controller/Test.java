@@ -28,6 +28,7 @@ public class Test {
 	@GetMapping("test.html")
 	public String test2(ModelMap map)
 	{
+		System.out.println(11111);
 		return "NewFile";
 	}	
 }

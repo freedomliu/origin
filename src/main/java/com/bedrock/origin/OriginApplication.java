@@ -5,9 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 //扫描 mybatis mapper 包路径
@@ -31,5 +33,10 @@ public class OriginApplication extends SpringBootServletInitializer{
 	{
 		//独立Tomcat部署时运行入口  
 		return builder.sources(OriginApplication.class);
+	}
+	@Bean
+	public RestTemplate restTemplate()
+	{
+		return new RestTemplate();
 	}
 }
