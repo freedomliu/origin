@@ -104,9 +104,12 @@ public  class ExcelHelper {
 				}
 			}
 			response.reset();
+			fileName+=".xls";
 			response.setContentType("application/force-download");// 设置强制下载不打开
-			response.addHeader("Content-Disposition", "attachment;fileName="
-					+ URLEncoder.encode(fileName+".xls", "utf-8"));// 设置文件名
+		    String userAgent = request.getHeader("User-Agent");  
+		    byte[] bytes = userAgent.contains("MSIE") ? fileName.getBytes() : fileName.getBytes("UTF-8"); 
+		    String name = new String(bytes, "ISO-8859-1"); 
+		    response.setHeader("Content-disposition", String.format("attachment; filename=\"%s\"", name));
 			workbook.write(response.getOutputStream());
 		} 
 		catch (Exception e5) 
@@ -326,6 +329,10 @@ public  class ExcelHelper {
 		 }
          for(int i=1;i<rowNum;i++)
          {
+        	 if(isEmpty(sheet.getRow(i),filed.length))
+        	 {
+        		 continue;
+        	 }
         	 T t=bean.newInstance();
         	 for(int j=0;j<map.size();j++)
         	 {
@@ -368,4 +375,15 @@ public  class ExcelHelper {
     	return list;
     }
     
+    private static boolean isEmpty(HSSFRow row,int cellNum)
+    {
+    	for(int i=0;i<cellNum;i++)
+    	{
+    		if(row.getCell(i)!=null &&"".equals(row.getCell(i).toString()))
+    		{
+    			return true;
+    		}
+    	}
+    	return false;
+    }
 }
