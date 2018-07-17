@@ -1,5 +1,6 @@
 package com.bedrock.origin.utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -7,20 +8,25 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bedrock.origin.common.OkHttpRequestBody;
 import com.bedrock.origin.constant.CodeType;
 
 import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.FormBody.Builder;
 
 /**
  * 
@@ -222,6 +228,83 @@ public class OkHttpHelper
 	}
 	
 	/**
+	 * post 表单提交  这个好用 上边那个有待研究
+	 * 表单
+	 * 当callbacks存在时为异步 否则同步
+	 * @param url
+	 * @param map
+	 * @param callbacks
+	 * @return
+	 * @throws IOException
+	 */
+	public static JSONObject postForm(String url,Map<String,String> map,Callback callbacks) throws IOException
+	{
+		Builder builder = new FormBody.Builder();
+		for (String key : map.keySet()) {
+			builder.add(key, map.get(key));
+		}
+		FormBody requestBody  = builder.build();
+		Request request = new Request.Builder().url(url).post(requestBody).build();
+	    return executeP(url, request, callbacks);
+	}
+	
+	/**
+	 * 上传文件 并 包含参数
+	 * @author liuxiangtao  
+	 * @date 2018年7月16日 下午3:33:02
+	 *  
+	 * @param url
+	 * @param file
+	 * @param map
+	 * @param callbacks
+	 * @return
+	 */
+	public static JSONObject postStream(String url,File file,String fileKey,Map<String,String> map,Callback callbacks) 
+	{ 	
+    	OkHttpClient okHttpClient  = new OkHttpClient.Builder()
+    			.connectTimeout(600, TimeUnit.SECONDS)
+                .readTimeout(600, TimeUnit.SECONDS).writeTimeout(600, TimeUnit.SECONDS)
+                .build();
+			
+		MediaType type=MediaType.parse("application/octet-stream");
+		RequestBody fileBody=RequestBody.create(type,file);
+		
+		okhttp3.MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder()
+		        .setType(MultipartBody.ALTERNATIVE);
+		   
+		for (String key : map.keySet()) {
+			multipartBodyBuilder.addFormDataPart(key, map.get(key));
+		}
+		MultipartBody  multipartBody=multipartBodyBuilder.addPart(Headers.of("Content-Disposition","form-data; name=\""+fileKey+"\"; filename=\""+file.getName()+"\""), fileBody)
+		        .build();
+		
+		Request request = new Request.Builder()
+		        .url(url)
+		        .post(multipartBody)
+		        .build();
+		if(callbacks!=null)
+		{
+			okHttpClient.newCall(request).enqueue(callbacks);
+		}
+		else
+		{                	
+			try
+			{
+				Response response = okHttpClient.newCall(request).execute();
+				if (!response.isSuccessful()) 
+					throw new IOException("Unexpected code " + response);
+				String bodyStr=response.body().string();
+				return (JSONObject) JSONObject.parseObject(bodyStr);
+				
+			}catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		return null;
+	 }
+	
+	/**
 	 * post 请求
 	 * 流
 	 * @param url
@@ -260,7 +343,7 @@ public class OkHttpHelper
 	{		
 		JSONObject jo=null;
 		OkHttpClient client = new OkHttpClient();
-		if(callbacks.length!=0)
+		if(callbacks!=null)
 		{
 			client.newCall(request).enqueue(callbacks[0]);
 		}
@@ -274,5 +357,12 @@ public class OkHttpHelper
 			}
 		}
 		return jo;
+	}
+	
+	public static void main(String[] args) throws IOException {
+		Map<String,Object> map=new HashMap<>();
+		map.put("phone", "18624362516");
+		map.put("date", "2018-07-04");
+		JSONObject jo=postForm("http://uatservice.my-audi.com.cn/UnifyApp/interfaces/gerRankHistory.do", map, null);
 	}
 }
