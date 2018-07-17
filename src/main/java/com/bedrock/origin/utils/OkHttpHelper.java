@@ -19,6 +19,7 @@ import com.bedrock.origin.constant.CodeType;
 
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.FormBody.Builder;
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -26,7 +27,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.FormBody.Builder;
 
 /**
  * 
@@ -35,6 +35,18 @@ import okhttp3.FormBody.Builder;
  */
 public class OkHttpHelper
 {
+	private static class SingletonBuilder
+	{
+        private final static OkHttpClient instance = new OkHttpClient.Builder()
+    			.connectTimeout(600, TimeUnit.SECONDS)
+                .readTimeout(600, TimeUnit.SECONDS).writeTimeout(600, TimeUnit.SECONDS)
+                .build();
+    }
+	
+    public static OkHttpClient getBuilder(){
+        return SingletonBuilder.instance;
+    }
+	
 	/**
 	 * 同步get请求
 	 * @param url
