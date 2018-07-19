@@ -34,7 +34,7 @@ import okhttp3.Response;
  * https://www.jianshu.com/p/039d05fb4834
  */
 public class OkHttpHelper
-{
+{	
 	private static class SingletonBuilder
 	{
         private final static OkHttpClient instance = new OkHttpClient.Builder()
@@ -272,17 +272,14 @@ public class OkHttpHelper
 	 * @return
 	 */
 	public static JSONObject postStream(String url,File file,String fileKey,Map<String,String> map,Callback callbacks) 
-	{ 	
-    	OkHttpClient okHttpClient  = new OkHttpClient.Builder()
-    			.connectTimeout(600, TimeUnit.SECONDS)
-                .readTimeout(600, TimeUnit.SECONDS).writeTimeout(600, TimeUnit.SECONDS)
-                .build();
+	{	
+    	OkHttpClient okHttpClient  = getBuilder();
 			
-		MediaType type=MediaType.parse("application/octet-stream");
+		MediaType type=MediaType.parse("multipart/form-data");
 		RequestBody fileBody=RequestBody.create(type,file);
 		
 		okhttp3.MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder()
-		        .setType(MultipartBody.ALTERNATIVE);
+		        .setType(MultipartBody.FORM);
 		   
 		for (String key : map.keySet()) {
 			multipartBodyBuilder.addFormDataPart(key, map.get(key));
