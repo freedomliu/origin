@@ -8,26 +8,26 @@
             <property name="suppressAllComments" value="true"/>  
         </commentGenerator>  
         <!--数据库链接URL，用户名、密码 -->  
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/fire" userId="root" password="root">  
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://192.168.215.173:3306/dealerhelper" userId="root" password="root">  
         </jdbcConnection>  
         <javaTypeResolver>  
             <property name="forceBigDecimals" value="false"/>  
         </javaTypeResolver>  
         <!-- 生成模型的包名和位置-->  
-        <javaModelGenerator targetPackage="com.bedrock.origin.beans" targetProject="origin">  
+        <javaModelGenerator targetPackage="com.bedrock.origin.entity" targetProject="origin">  
             <property name="enableSubPackages" value="true"/>  
             <property name="trimStrings" value="true"/>  
         </javaModelGenerator>  
         <!-- 生成映射文件的包名和位置-->  
-        <sqlMapGenerator targetPackage="com.bedrock.origin.mapper" targetProject="origin">  
+        <sqlMapGenerator targetPackage="com.bedrock.origin.mapper.master" targetProject="origin">  
             <property name="enableSubPackages" value="true"/>  
         </sqlMapGenerator>  
         <!-- 生成DAO的包名和位置-->  
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.bedrock.origin.mapper" targetProject="origin">  
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.bedrock.origin.mapper.master" targetProject="origin">  
             <property name="enableSubPackages" value="true"/>  
         </javaClientGenerator>  
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->  
-        <table tableName="areasize" domainObjectName="areasize" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <table tableName="helper_faw_vw_SLLBProject" domainObjectName="SLLBProject" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context> 
 </generatorConfiguration>
 
